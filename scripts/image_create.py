@@ -6,16 +6,16 @@ from cv_bridge import CvBridge
 
 def callback(bag):
 	global i
+	path = "../img/"
 	b = CvBridge()
 	img = b.imgmsg_to_cv2(bag, 'bgr8')
 	name = str(i) + ".png"
-	cv2.imwrite(name,img)
+	cv2.imwrite(path + name,img)
 	i += 1
-	print(i)
+	print(path + str(i))
 
 if __name__ == '__main__':
 	rospy.init_node('video_to_image')
 	i = 0
-	sub = rospy.Subscriber('/rgb/image_raw_color', Image, callback, queue_size=1)
-	print("aaa")
+	rospy.Subscriber('/rgb/image_raw_color', Image, callback, queue_size=1)
 	rospy.spin()
